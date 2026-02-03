@@ -35,6 +35,7 @@ interface DonationData {
     notes: string;
     utrNumber?: string;
     groceryList: GroceryItem[];
+    receiptNo?: string;
 }
 
 const DonationForm = () => {
@@ -174,6 +175,23 @@ const DonationForm = () => {
 
         try {
             if (session?.user) {
+                // Generate Receipt Number
+                const currentYear = new Date().getFullYear();
+                const startOfYear = new Date(`${currentYear}-01-01T00:00:00.000Z`).toISOString();
+
+                const { count, error: countError } = await supabase
+                    .from('donations')
+                    .select('*', { count: 'exact', head: true })
+                    .gte('created_at', startOfYear);
+
+                if (countError) throw countError;
+
+                const nextCount = (count || 0) + 1;
+                const generatedReceiptNo = `#${currentYear}-${nextCount.toString().padStart(4, '0')}`;
+
+                // Update form data state so PDF uses it immediately
+                setFormData(prev => ({ ...prev, receiptNo: generatedReceiptNo }));
+
                 const { error: dbError } = await supabase.from('donations').insert({
                     donor_name: formData.donorName,
                     mobile_number: formData.mobileNumber,
@@ -183,7 +201,8 @@ const DonationForm = () => {
                     utr_number: formData.utrNumber || null,
                     grocery_items: formData.groceryList,
                     notes: formData.notes || null,
-                    created_by: session.user.id
+                    created_by: session.user.id,
+                    receipt_no: generatedReceiptNo
                 });
 
                 if (dbError) throw dbError;

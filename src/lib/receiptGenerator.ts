@@ -124,8 +124,8 @@ export const generateDonationPDF = async (
         const receiptNo = data.receiptNo || Date.now().toString().slice(-6);
 
         receiptElement.innerHTML = `
-    <div style="width: 794px; min-height: 1123px; padding: 40px; box-sizing: border-box; background: #fff; position: relative;">
-        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; height: 100%; border: 4px solid #ea580c; border-radius: 0px; background: #fff; padding: 40px; display: flex; flex-direction: column; box-sizing: border-box; justify-content: space-between; position: relative;">
+    <div style="width: 794px; min-height: 1123px; padding: 40px; box-sizing: border-box; background: #fff; position: relative; display: flex; flex-direction: column;">
+        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; border: 4px solid #ea580c; border-radius: 0px; background: #fff; padding: 40px; display: flex; flex-direction: column; box-sizing: border-box; position: relative; margin-bottom: 30px;">
              
              <div style="position: absolute; top: 12px; right: 15px; font-size: 11px; color: #6b7280; font-weight: 600; text-transform: uppercase; background: #fff; padding: 0 8px;">
                 Original Copy
@@ -178,10 +178,18 @@ export const generateDonationPDF = async (
                 
                 ${amountSection}
              </div>
+        </div>
 
-             <div style="margin-top: auto; text-align: center;">
-                 <p style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 5px;">${t('thank_you')}</p>
-                 <p style="font-size: 13px; color: #6b7280;">${t('trust_name')}</p>
+        <div style="margin-top: auto; text-align: center; padding: 20px 40px;">
+             <p style="font-size: 14px; color: #374151; line-height: 1.6; margin-bottom: 15px;">
+                 2026 ನೇ ವರ್ಷದ ಶ್ರೀ ಗುರು ಕೊಟ್ಟೂರೇಶ್ವರ ಮಹಾಸ್ವಾಮಿಯವರ ರಥೋತ್ಸವಕ್ಕೆ ಕಾಲ್ನಡಿಗೆಯ (ಪಾದಯಾತ್ರೆ) ಮೂಲಕ ಆಗಮಿಸುವ ಭಕ್ತಾದಿಗಳ ವಿವಿಧ ಸೇವೆಗಳಿಗೆ ತಾವುಗಳು ತನು-ಮನ-ಧನಗಳ ಮೂಲಕ ಕೈಜೋಡಿಸಿದ್ದಕ್ಕಾಗಿ ತುಂಬು ಹೃದಯದ ಧನ್ಯವಾದಗಳು.
+             </p>
+             <p style="font-size: 14px; color: #374151; line-height: 1.6; margin-bottom: 25px;">
+                 ಶ್ರೀ ಪರಮಶಕ್ತಿ ಗುರುಕೊಟ್ಟೂರೇಶ್ವರ ಮಹಾಸ್ವಾಮಿಯವರು ನಿಮಗೂ ಹಾಗೂ ನಿಮ್ಮ ಕುಟುಂಬ ವರ್ಗದವರಿಗೆ ಆಯುರಾರೋಗ್ಯ ಐಶ್ವರ್ಯ ಸಕಲ ಸನ್ಮಂಗಳಗಳನ್ನು ಕರುಣಿಸಲಿ ಎಂದು ಭಕ್ತಿ ಪೂರ್ವಕವಾಗಿ ಪ್ರಾರ್ಥಿಸುತ್ತೇವೆ.
+             </p>
+             <div style="text-align: right; margin-top: 30px;">
+                 <p style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 5px;">ಧನ್ಯವಾದಗಳೊಂದಿಗೆ</p>
+                 <p style="font-size: 16px; font-weight: 700; color: #ea580c;">ಪರಮಶಕ್ತಿ ಶ್ರೀ ಗುರುಕೊಟ್ಟೂರೇಶ್ವರ ಟ್ರಸ್ಟ್ ಕೊಟ್ಟೂರು</p>
              </div>
         </div>
     </div>

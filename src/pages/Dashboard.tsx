@@ -57,6 +57,7 @@ export default function Dashboard() {
         notes?: string;
         created_at: string;
         created_by: string;
+        receipt_no?: string;
     }
 
     const [donations, setDonations] = useState<Donation[]>([]);
@@ -276,6 +277,7 @@ export default function Dashboard() {
                 utrNumber: donation.utr_number,
                 groceryList: donation.grocery_items || [],
                 createdAt: donation.created_at,
+                receiptNo: donation.receipt_no
             };
             // Default to English for quick download
             // We need a translator function. Since we are in dashboard, 't' might be generic.
@@ -304,6 +306,7 @@ export default function Dashboard() {
                 utrNumber: donation.utr_number,
                 groceryList: donation.grocery_items || [],
                 createdAt: donation.created_at,
+                receiptNo: donation.receipt_no
             };
 
             const file = await generateDonationPDF(data, "en", t, true) as File;
@@ -1028,6 +1031,10 @@ export default function Dashboard() {
                             </div>
 
                             <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                                <div className="flex justify-between items-center mb-2 pb-2 border-b border-gray-200">
+                                    <span className="text-xs text-gray-500 uppercase tracking-wider">Receipt No</span>
+                                    <span className="font-mono font-bold text-gray-900">{selectedDonation.receipt_no || "N/A"}</span>
+                                </div>
                                 <div className="flex justify-between items-center mb-2">
                                     <span className="text-xs text-gray-500 uppercase tracking-wider">Type</span>
                                     <Badge variant="outline" className="bg-white">{selectedDonation.payment_mode}</Badge>

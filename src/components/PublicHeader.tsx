@@ -23,8 +23,8 @@ const PublicHeader = () => {
                     <div className="flex-1 flex items-center justify-start">
                         <div className="flex items-center gap-2 cursor-pointer h-full" onClick={() => navigate("/")}>
                             <img src="/Logo.jpeg" alt="Logo" className="h-10 w-10 object-contain rounded-lg" />
-                            <h1 className="text-xl font-bold text-gray-800 hidden lg:block whitespace-nowrap">PSGKT Kottur</h1>
-                            <h1 className="text-xl font-bold text-gray-800 lg:hidden">PSGKT</h1>
+                            <h1 className="text-xl font-bold text-gray-800 hidden lg:block whitespace-nowrap">Paramashakti</h1>
+                            <h1 className="text-xl font-bold text-gray-800 lg:hidden">Paramashakti</h1>
                         </div>
                     </div>
 

@@ -1,6 +1,6 @@
 import PublicHeader from "@/components/PublicHeader";
 import TopRibbon from "@/components/TopRibbon";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Users, Instagram } from "lucide-react";
 
 const ContactUs = () => {
     return (
@@ -34,16 +34,7 @@ const ContactUs = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4">
-                                    <div className="p-4 bg-green-50 text-green-600 rounded-2xl border border-green-100">
-                                        <Phone className="h-8 w-8" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Call Us</p>
-                                        <p className="font-bold text-gray-800 text-2xl">+91 99000 00000</p>
-                                        <p className="text-gray-500 text-sm mt-1">Available Mon-Sat, 9:00 AM - 6:00 PM</p>
-                                    </div>
-                                </div>
+
 
                                 <div className="flex items-start gap-4">
                                     <div className="p-4 bg-purple-50 text-purple-600 rounded-2xl border border-purple-100">
@@ -51,8 +42,26 @@ const ContactUs = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Email Us</p>
-                                        <p className="font-bold text-gray-800 text-xl">contact@psgkt-kottur.org</p>
+                                        <p className="font-bold text-gray-800 text-lg md:text-xl break-all">pskottureshwaratrustr@gmail.com</p>
                                         <p className="text-gray-500 text-sm mt-1">We'll respond within 24 hours</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-4">
+                                    <div className="p-4 bg-pink-50 text-pink-600 rounded-2xl border border-pink-100">
+                                        <Instagram className="h-8 w-8" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Follow Us</p>
+                                        <a
+                                            href="https://www.instagram.com/pskottureshwaratrustr"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="font-bold text-gray-800 text-lg md:text-xl hover:text-pink-600 transition-colors"
+                                        >
+                                            @pskottureshwaratrustr
+                                        </a>
+                                        <p className="text-gray-500 text-sm mt-1">Get latest updates</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,10 +86,65 @@ const ContactUs = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Team Details Section */}
+                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-5 duration-1000 delay-200">
+                    {/* Trust Team */}
+                    <div className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8">
+                        <h3 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                            <span className="bg-orange-100 p-2 rounded-lg text-orange-600"><Users className="h-6 w-6" /></span>
+                            Trust Team
+                        </h3>
+                        <div className="space-y-2">
+                            {[
+                                { name: "Nagaraj", role: "President", phone: "6361263254" },
+                                { name: "Abhi", role: "Secretary", phone: "8147115592" },
+                                { name: "Aramani Naveen", role: "Team Member", phone: "8660954427" },
+                                { name: "Sagar", role: "Team Member", phone: "9036321785" },
+                                { name: "Rudresh", role: "Team Member", phone: "6360073187" }
+                            ].map((member, idx) => (
+                                <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0 pb-2 last:pb-0">
+                                    <div>
+                                        <p className="font-bold text-gray-900 text-base">{member.name}</p>
+                                        <p className="text-xs font-semibold text-orange-600 uppercase tracking-wider">{member.role}</p>
+                                    </div>
+                                    <a href={`tel:+91${member.phone}`} className="mt-1 sm:mt-0 font-mono text-gray-600 font-bold bg-gray-100 px-2 py-1 rounded text-xs hover:bg-orange-100 hover:text-orange-700 transition-colors">
+                                        +91 {member.phone}
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Honorable Suggestions Team */}
+                    <div className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8">
+                        <h3 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                            <span className="bg-blue-100 p-2 rounded-lg text-blue-600"><Users className="h-6 w-6" /></span>
+                            Honorable Suggestions Team
+                        </h3>
+                        <div className="space-y-2">
+                            {[
+                                { name: "Mahesh", phone: "9071191949" },
+                                { name: "Prakash", phone: "9880399941" },
+                                { name: "Manu", phone: "9742110498" },
+                                { name: "Guru", phone: "9880439003" },
+                                { name: "Sandeep", phone: "9902317545" }
+                            ].map((member, idx) => (
+                                <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0 pb-2 last:pb-0">
+                                    <p className="font-bold text-gray-900 text-base">{member.name}</p>
+                                    <a href={`tel:+91${member.phone}`} className="mt-1 sm:mt-0 font-mono text-gray-600 font-bold bg-gray-100 px-2 py-1 rounded text-xs hover:bg-blue-100 hover:text-blue-700 transition-colors">
+                                        +91 {member.phone}
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </main>
 
-            <footer className="bg-white border-t border-gray-100 py-8 text-center text-gray-500 text-sm">
-                <p>P S SHRI GURU KOTTURESHWARA TRUST © {new Date().getFullYear()}</p>
+            <footer className="bg-white border-t border-gray-100 pt-8 pb-28 md:py-8 text-center text-gray-500 text-sm">
+                <p>PARAMASHAKTI SHRI GURU KOTTURESHWARA TRUST © {new Date().getFullYear()}</p>
+                <p className="mt-2 text-xs text-gray-400 font-medium">Developed and Maintained by <span className="font-black text-orange-500 tracking-wider">VIDEC</span></p>
             </footer>
         </div>
     );
