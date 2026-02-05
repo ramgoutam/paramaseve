@@ -204,7 +204,7 @@ const PublicData = () => {
                             </div>
                         </div>
 
-                        <div className="overflow-x-auto">
+                        <div className="hidden md:block overflow-x-auto">
                             <table className="w-full">
                                 <thead className="bg-gray-50/50">
                                     <tr>
@@ -264,6 +264,74 @@ const PublicData = () => {
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+
+                        {/* Mobile List View */}
+                        <div className="md:hidden">
+                            {viewType === 'donations' ? (
+                                recentDonations.length > 0 ? (
+                                    <div className="divide-y divide-gray-100">
+                                        {recentDonations.map((don, idx) => (
+                                            <div key={idx} className="p-4 space-y-3 hover:bg-green-50/10 transition-colors">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <h4 className="font-bold text-gray-900 leading-tight">{don.donor_name || 'Anonymous'}</h4>
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded mt-1 inline-block">
+                                                            {don.payment_mode || 'Online'}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-xs font-medium text-gray-400 shrink-0 bg-gray-50 px-2 py-1 rounded-lg">
+                                                        {don.created_at ? new Date(don.created_at).toLocaleDateString() : 'N/A'}
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex justify-end border-t border-dashed border-gray-100 pt-2">
+                                                    {don.payment_mode === 'GROCERIES' ? (
+                                                        <div className="flex flex-wrap justify-end gap-1.5">
+                                                            {don.grocery_items && Array.isArray(don.grocery_items) ? (
+                                                                don.grocery_items.map((item: any, i: number) => (
+                                                                    <span key={i} className="text-[10px] font-bold text-orange-700 bg-orange-50 border border-orange-100 px-2 py-1 rounded uppercase tracking-wide">
+                                                                        {item.name} {item.quantity}{item.unit}
+                                                                    </span>
+                                                                ))
+                                                            ) : (
+                                                                <span className="text-xs text-gray-400 italic">Groceries</span>
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="font-black text-green-600 text-xl tracking-tight">
+                                                            {(don.amount || 0) === 0 ? 'N/A' : `₹${(don.amount || 0).toLocaleString('en-IN')}`}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="p-12 text-center text-gray-400 text-sm">No donations recorded yet.</div>
+                                )
+                            ) : (
+                                recentExpenses.length > 0 ? (
+                                    <div className="divide-y divide-gray-100">
+                                        {recentExpenses.map((exp, idx) => (
+                                            <div key={idx} className="p-4 space-y-2 hover:bg-red-50/10 transition-colors">
+                                                <div className="flex justify-between items-start gap-4">
+                                                    <h4 className="font-bold text-gray-900 text-sm leading-snug">{exp.title || 'Untitled Expense'}</h4>
+                                                    <span className="text-xs font-medium text-gray-400 shrink-0 bg-gray-50 px-2 py-1 rounded-lg">
+                                                        {exp.expense_date ? new Date(exp.expense_date).toLocaleDateString() : 'N/A'}
+                                                    </span>
+                                                </div>
+                                                <div className="flex justify-between items-center pt-1">
+                                                    <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Amount</span>
+                                                    <span className="font-black text-red-600 text-lg tracking-tight">₹{(exp.amount || 0).toLocaleString('en-IN')}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="p-12 text-center text-gray-400 text-sm">No expenses recorded yet.</div>
+                                )
+                            )}
                         </div>
                     </div>
                 </div>
