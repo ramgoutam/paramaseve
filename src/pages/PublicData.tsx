@@ -38,7 +38,7 @@ const PublicData = () => {
                     // 1. Fetch Year-Specific Donations
                     const { data: yearDonations, error: donError } = await supabase
                         .from('donations')
-                        .select('donor_name, amount, created_at, payment_mode')
+                        .select('donor_name, amount, created_at, payment_mode, grocery_items')
                         .gte('created_at', startOfYear)
                         .lte('created_at', endOfYear)
                         .order('created_at', { ascending: false });
@@ -222,8 +222,24 @@ const PublicData = () => {
                                                         <div className="font-bold text-gray-800 group-hover:text-green-700 transition-colors">{don.donor_name || 'Anonymous'}</div>
                                                         <div className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">{don.payment_mode || 'Online'}</div>
                                                     </td>
-                                                    <td className="px-8 py-5 text-right font-black text-green-600 text-lg">
-                                                        {don.payment_mode === 'GROCERIES' || (don.amount || 0) === 0 ? 'N/A' : `₹${(don.amount || 0).toLocaleString('en-IN')}`}
+                                                    <td className="px-8 py-5 text-right font-black text-lg">
+                                                        {don.payment_mode === 'GROCERIES' ? (
+                                                            <div className="flex flex-col items-end gap-1">
+                                                                {don.grocery_items && Array.isArray(don.grocery_items) ? (
+                                                                    don.grocery_items.map((item: any, i: number) => (
+                                                                        <span key={i} className="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-md whitespace-nowrap">
+                                                                            {item.name} <span className="text-orange-400">({item.quantity} {item.unit})</span>
+                                                                        </span>
+                                                                    ))
+                                                                ) : (
+                                                                    <span className="text-sm text-gray-400">Groceries</span>
+                                                                )}
+                                                            </div>
+                                                        ) : (
+                                                            <span className="text-green-600">
+                                                                {(don.amount || 0) === 0 ? 'N/A' : `₹${(don.amount || 0).toLocaleString('en-IN')}`}
+                                                            </span>
+                                                        )}
                                                     </td>
                                                     <td className="px-8 py-5 text-right text-sm text-gray-500 font-medium">{don.created_at ? new Date(don.created_at).toLocaleDateString() : 'N/A'}</td>
                                                 </tr>
