@@ -70,7 +70,14 @@ const DonationForm = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+
+        if (name === "mobileNumber") {
+            // Allow only numbers and max 10 digits
+            const formattedValue = value.replace(/\D/g, '').slice(0, 10);
+            setFormData((prev) => ({ ...prev, [name]: formattedValue }));
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleSelectChange = (value: string) => {
@@ -120,6 +127,15 @@ const DonationForm = () => {
             toast({
                 title: t('missing_info_title'),
                 description: t('missing_info_desc'),
+                variant: "destructive",
+            });
+            return false;
+        }
+
+        if (formData.mobileNumber.length !== 10) {
+            toast({
+                title: "Invalid Mobile Number",
+                description: "Mobile number must be exactly 10 digits.",
                 variant: "destructive",
             });
             return false;
@@ -175,19 +191,14 @@ const DonationForm = () => {
 
         try {
             if (session?.user) {
-                // Generate Receipt Number
+                // Generate Receipt Number via RPC (Server-side to ensure global sequence)
                 const currentYear = new Date().getFullYear();
-                const startOfYear = new Date(`${currentYear}-01-01T00:00:00.000Z`).toISOString();
 
-                const { count, error: countError } = await supabase
-                    .from('donations')
-                    .select('*', { count: 'exact', head: true })
-                    .gte('created_at', startOfYear);
+                const { data: generatedReceiptNo, error: rpcError } = await supabase
+                    .rpc('get_next_receipt_number', { year_text: currentYear.toString() });
 
-                if (countError) throw countError;
-
-                const nextCount = (count || 0) + 1;
-                const generatedReceiptNo = `#${currentYear}-${nextCount.toString().padStart(4, '0')}`;
+                if (rpcError) throw rpcError;
+                if (!generatedReceiptNo) throw new Error("Failed to generate receipt number");
 
                 // Update form data state so PDF uses it immediately
                 setFormData(prev => ({ ...prev, receiptNo: generatedReceiptNo }));
